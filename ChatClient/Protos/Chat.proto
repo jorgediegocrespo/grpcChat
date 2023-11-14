@@ -1,0 +1,29 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+package chat;
+
+message ConnectRequest {
+	string user_id = 1;
+}
+
+message DisconnectRequest {
+	string user_id = 1;
+}
+
+message ChatMessageRequest{
+	string sender_id = 1;
+	string receiver_id = 2;
+	string message = 3;
+}
+
+message ChatMessageResponse {
+	string sender_id = 1;
+	string message = 2;
+}
+
+service ChatService {
+	rpc Connect(ConnectRequest) returns (google.protobuf.Empty) {}
+	rpc Disconnect (DisconnectRequest) returns (google.protobuf.Empty) {}
+	rpc SendChatMessage(stream ChatMessageRequest) returns (stream ChatMessageResponse) {}
+}
